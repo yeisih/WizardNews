@@ -3,8 +3,8 @@ const morgan= require("morgan");
 const postBank= require("./postBank.js");
 const app = express();
 const path=require("path");
-const timeAgo=require
-
+const timeAgo=require("node-time-ago");
+// const postList= rrequire("./postList.js")
 
 const staticFunction=express.static(path.join(__dirname,"public"))
 app.use(morgan('dev'));
@@ -12,8 +12,10 @@ app.use(staticFunction);
 
 
 
+
 app.get("/", (req, res,next) => {
 const posts=postBank.list();
+console.log(posts)
 
   const html=`<!DOCTYPE html>
   <html>
@@ -32,7 +34,7 @@ const posts=postBank.list();
             <small>(by ${post.name})</small>
           </p>
           <small class="news-info">
-            ${post.upvotes} upvotes | ${post.date}
+            ${post.upvotes} upvotes | ${timeAgo(post.date)}
           </small>
         </div>`
       ).join('')}
